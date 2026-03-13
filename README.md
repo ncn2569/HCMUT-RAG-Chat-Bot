@@ -114,11 +114,9 @@ User Query → Query Rewriting (dựa trên history)
     → Generate Answer
     → Update History
 ```
-```text
-📝 Lưu ý
+
+## 📝 Lưu ý
 - Dữ liệu hiện tại là bản crawl thử nghiệm, có thể chưa đầy đủ.
 - Dữ liệu theo format Q-A, với 1 cột Question ghi các câu hỏi và 1 cột Answers ghi các câu trả lời.
 - Cần API key Gemini để chạy (có free tier).
 - File .env và thư mục data/ đã được ignore để bảo mật.
-- Chưa có Cross-Encoder rerank (để nâng cấp sau khi data lớn hơn).
-```
