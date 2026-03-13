@@ -3,6 +3,7 @@
 Trợ lý tư vấn tuyển sinh thông minh cho Trường Đại học Bách khoa TP.HCM, sử dụng RAG (Retrieval-Augmented Generation) với Google Gemini.
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![Gradio](https://img.shields.io/badge/Gradio-4.0+-orange.svg)
 
 ## 🚀 Tính năng
 
