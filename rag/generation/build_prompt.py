@@ -29,12 +29,11 @@ def build_prompt(query: str, contexts: list) -> str:
 
     Hướng dẫn trả lời:
     - Chỉ sử dụng thông tin tham khảo nếu nó **trực tiếp** trả lời được câu hỏi.
-    - Nếu thông tin tham khảo không liên quan đến câu hỏi thì không cần dùng cũng được.
     - Nếu hoàn toàn không có thông tin, trả lời: "Tôi không tìm thấy thông tin này trong cơ sở dữ liệu."
     - Không bịa đặt thông tin.
     - Trả lời ngắn gọn, rõ ràng và trả lời đúng trọng tâm câu hỏi.
-    - Không đặt thêm câu hỏi, chỉ trả lời một lần.
-
+    - Chỉ trả lời thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh.
+    - Nếu câu hỏi hoặc yêu cầu của người dùng không liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh thì trả lời "Xin lỗi tôi chỉ trả lời những thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh, nếu có câu hỏi liên quan đến trường xin hãy cho tôi biết.".
     Trả lời:"""
 
     return prompt
