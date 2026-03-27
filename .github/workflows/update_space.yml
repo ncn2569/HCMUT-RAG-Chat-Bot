@@ -27,7 +27,7 @@ jobs:
       env:
         HF_TOKEN: ${{ secrets.hf_token }}
       run: |
-        huggingface-cli login --token $HF_TOKEN --add-to-git-credential
+        python -m huggingface_hub.commands.user login --token $HF_TOKEN --add-to-git-credential
 
     - name: Deploy to Spaces
-      run: gradio deploy
+      run: python -m gradio deploy
