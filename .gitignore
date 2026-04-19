@@ -46,14 +46,19 @@ Thumbs.db
 # Data files - Không push data lên GitHub (nặng + bảo mật)
 data/raw/
 data/processed/
-data/vectors/
 *.xlsx
 *.csv
-*.jsonl
-*.npy
 
 # Logs
 *.log
 
 # Hugging Face cache
 .huggingface/
+
+*.csv
+
+temp.py
+test_set.json
+crawl_project_src.py
+all_code.txt
+evaluation.py

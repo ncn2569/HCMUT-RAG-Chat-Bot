@@ -27,10 +27,8 @@ def generate_hypothetical_query(query, model_name=os.getenv('model_name')):
 
     hypothetical = response.text.strip() if response.text else query
 
-    # Clean: lấy dòng đầu, bỏ prefix nếu có
     hypothetical = hypothetical.split("\n")[0].strip()
     hypothetical = re.sub(r'^(Câu hỏi tương tự[:：]\s*)', '', hypothetical)
-
 
     return hypothetical
 

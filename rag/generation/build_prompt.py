@@ -3,13 +3,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv('config/.env')
 client = genai.Client(api_key=os.getenv('API_KEY'))
-import json
-data = []
-with open('data/vectors/vectors1.jsonl', "r", encoding="utf-8") as f:
-    for line in f:
-        line = line.strip()
-        if line:
-            data.append(json.loads(line))  
+
 def build_prompt(query: str, contexts: list) -> str:
     """
     Build prompt với Role + Context + Constraints
@@ -28,14 +22,12 @@ def build_prompt(query: str, contexts: list) -> str:
     Câu hỏi: {query}
 
     Hướng dẫn trả lời:
-    - Chỉ sử dụng thông tin tham khảo nếu nó **trực tiếp** trả lời được câu hỏi.
+    - Chỉ sử dụng thông tin tham khảo nếu nó trực tiếp trả lời được câu hỏi.
     - Nếu hoàn toàn không có thông tin, trả lời: "Tôi không tìm thấy thông tin này trong cơ sở dữ liệu."
-    - Không bịa đặt thông tin.
+    - TUYỆT ĐỐI Không bịa đặt thông tin.
     - Trả lời ngắn gọn, rõ ràng và trả lời đúng trọng tâm câu hỏi.
-    - Chỉ trả lời thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh.
     - Nếu câu hỏi hoặc yêu cầu của người dùng không liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh thì trả lời "Xin lỗi tôi chỉ trả lời những thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh, nếu có câu hỏi liên quan đến trường xin hãy cho tôi biết.".
     Trả lời:"""
-
     return prompt
 
 def rewrite_query_with_full_history(current_query: str, history: list) -> str:
@@ -72,5 +64,4 @@ def rewrite_query_with_full_history(current_query: str, history: list) -> str:
 
     rewritten = response.text.strip() if response.text else current_query
     rewritten = rewritten.strip('"').strip("'")
-
     return rewritten
