@@ -4,6 +4,7 @@ emoji: 🎓
 colorFrom: blue
 colorTo: indigo
 sdk: docker
+app_port: 8501
 pinned: false
 ---
 # 🎓 HCMUT RAG Chatbot
@@ -106,11 +107,11 @@ HF_TOKEN= your huggings face token.
         from rag.embedding.embed import embedding
         embedding()
         # subprocess.run([sys.executable, "-m", "streamlit", "run", "app/streamlit_app.py"])
-
+```
 **Bước 5.3:** Chạy lệnh để tạo vector embeddings:
-
+```bash
     python main.py
-
+```
 **Bước 5.4:** Sau khi chạy xong, sửa lại `main.py` để chạy web:
 ```python
     # Trong main.py
@@ -118,11 +119,11 @@ HF_TOKEN= your huggings face token.
         from rag.embedding.embed import embedding
         #embedding()
         subprocess.run([sys.executable, "-m", "streamlit", "run", "app/streamlit_app.py"])
-
+```
 **Bước 5.5:** Giờ chạy chatbot:
-
+```bash
     python main.py
-
+```
 ```text
 🔧 Cách hoạt động (Pipeline)
 User Query → Query Rewriting (dựa trên history) 
