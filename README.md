@@ -16,9 +16,9 @@ Trợ lý tư vấn tuyển sinh thông minh cho Trường Đại học Bách kh
 ![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)
 
 ## 📝 Tâm sự của tác giả 
-- Dữ liệu hiện tại là từ một cá nhân rảnh rỗi iu trường và có đam mê với AI crawl nên có thể hơi thô sơ nhưng đảm bảo là tràn đầy tính nhiệt huyết với từng dòng data.
-- Dữ liệu theo format Q-A, với 1 cột Question ghi các câu hỏi và 1 cột Answers ghi các câu trả lời (đây là dạng dễ crawl nhất).
-- Cần API key Gemini để chạy.
+- Dữ liệu hiện tại là từ một cá nhân rảnh rỗi iu trường (optional + seasonal) và có đam mê với AI. 
+- Dữ liệu theo format Q-A, với 1 cột Question ghi các câu hỏi và 1 cột Answers ghi các câu trả lời (đây là dạng dễ crawl nhất). Tổng tất cả là 80 câu dòng (Tớ biết nó ít nhưng dòng nào cũng chan chứa mồ hôi hết).
+- Cần API key Gemini để chạy (của tớ lúc làm thì tất nhiên là free rồi, svien bkhoa nghèo có tiếng mà).
 - File .env và thư mục data/raw và data/processed đã được ignore nhưng vẫn còn data/vectors nếu bạn múa ngó thử về data mình đã cất công hái lượm.
 - Tất nhiên là tương lai mình sẽ phát triển lên thêm (possibly agents nếu mình vô tình lượm đc một cái api key unlimited còn hiện tại thì chỉ là một Naive RAG bình thường thôi)
 
@@ -31,8 +31,9 @@ Trợ lý tư vấn tuyển sinh thông minh cho Trường Đại học Bách kh
 
 ## 📊 Đánh giá hệ thống (RAGAS Evaluation Metrics)
 
-Hệ thống được đánh giá tự động thông qua framework **RAGAS**, các chỉ số gồm: (context precision + faithfulness + context recall + answer relevance)
+Hệ thống được đánh giá tự động thông qua framework **RAGAS**, các chỉ số gồm: (context precision + faithfulness + context recall + answer relevance).
 
+Chấm bằng gemini 3 flash lite, thằng này thì nó đần hơn gemma 3 27b mình dùng để trả lời nhưng mà nó là con free duy nhất mà mình chạy mượt với ragas, mấy thằng khác thì nó không hỗ trợ hoặc lâu vl hoặc trả phí.
 
 | Sample User Query | Faithfulness | Context Recall | Answer Relevancy | Context Precision |
 | :--- | :---: | :---: | :---: | :---: |
@@ -69,7 +70,7 @@ hcmut-rag-chatbot/
 │   └── .env                   # API keys (tự tạo với API_KEY theo template)
 ├── main.py                    
 ├── evaluation.py              # siêu phiền siêu lâu nếu không sở hữu api key có tiền (nghèo mà chịu thôi)   
-├── report5.xlsx                
+├── report5.xlsx               # này là file đánh giá hiện tại.
 ├── Dockerfile                 
 └── requirements.txt           
 ```
