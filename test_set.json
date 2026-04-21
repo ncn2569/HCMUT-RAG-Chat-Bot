@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Trường Đại học Bách khoa TP.HCM được thành lập năm nào và tên viết tắt là gì?",
+    "ground_truth": "Trường Đại học Bách khoa TP.HCM được thành lập năm 1957 và có tên viết tắt là HCMUT."
+  },
+  {
+    "question": "Địa chỉ cơ sở 1 của trường Bách khoa TP.HCM ở đâu vậy ạ?",
+    "ground_truth": "Cơ sở 1 của trường nằm tại 268 Lý Thường Kiệt, Phường 14, Quận 10, Thành phố Hồ Chí Minh."
+  },
+  {
+    "question": "Nếu em muốn gọi điện hỏi thông tin tuyển sinh thì gọi số nào ạ?",
+    "ground_truth": "Bạn có thể gọi đến số điện thoại 02838647256 để được tư vấn."
+  },
+  {
+    "question": "Năm 2025-2026 trường có mấy phương thức xét tuyển và tỉ lệ chỉ tiêu mỗi phương thức là bao nhiêu?",
+    "ground_truth": "Trường có 2 phương thức tuyển sinh: Phương thức 1 là xét tuyển thẳng theo quy chế của Bộ GD&ĐT, chiếm 1–5% tổng chỉ tiêu; Phương thức 2 là xét tuyển tổng hợp, chiếm 95–99% tổng chỉ tiêu."
+  },
+  {
+    "question": "Mã trường khi em đăng ký xét tuyển vào Bách khoa là gì?",
+    "ground_truth": "Mã trường của Trường Đại học Bách khoa - ĐHQG-HCM là QSB."
+  },
+  {
+    "question": "Điểm chuẩn ngành Khoa học Máy tính theo phương thức xét tuyển tổng hợp năm 2024 là bao nhiêu?",
+    "ground_truth": "Điểm chuẩn ngành Khoa học Máy tính theo phương thức xét tuyển tổng hợp năm 2024 là 84,16 điểm (thang 100)."
+  },
+  {
+    "question": "Công thức tính điểm xét tuyển tổng hợp của trường Bách khoa gồm những thành phần nào?",
+    "ground_truth": "Điểm xét tuyển = Điểm học lực + Điểm ưu tiên (thang 100). Trong đó Điểm học lực = Điểm năng lực × 70% + Điểm THPT quốc gia quy đổi × 20% + Điểm học THPT quy đổi × 10%. Điểm thi Đánh giá Năng lực ĐHQG-HCM chiếm trọng số 70% trong thành phần điểm năng lực."
+  },
+  {
+    "question": "Em đang học lớp 12 và muốn biết ngành Khoa học Máy tính năm 2025 lấy bao nhiêu chỉ tiêu?",
+    "ground_truth": "Năm 2025, chỉ tiêu tuyển sinh ngành Khoa học Máy tính của Trường Đại học Bách khoa - ĐHQG-HCM là 150 chỉ tiêu."
+  },
+  {
+    "question": "Nộp hồ sơ xét tuyển bằng điểm thi THPT năm 2025 trong khoảng thời gian nào vậy ạ?",
+    "ground_truth": "Thời gian nộp hồ sơ xét tuyển bằng điểm thi THPT năm 2025 là từ ngày 21/4/2025 đến 17 giờ ngày 28/4/2025."
+  },
+  {
+    "question": "Để tra cứu kết quả trúng tuyển vào Bách khoa em vào trang web nào ạ?",
+    "ground_truth": "Bạn có thể tra cứu kết quả tuyển sinh tại: https://mybk.hcmut.edu.vn/tuyensinh/search"
+  },
+  {
+    "question": "Khi nhập học cần chuẩn bị những giấy tờ gì vậy ạ?",
+    "ground_truth": "Hồ sơ nhập học gồm: Phiếu đăng ký xét tuyển và tờ lý lịch; Giấy khai sinh (bản sao hoặc công chứng); 2 ảnh 3x4; Bằng tốt nghiệp THPT (bản sao hoặc công chứng); Học bạ THPT (bản sao công chứng); Bằng tốt nghiệp ĐH/CĐ (bản sao hoặc công chứng); 01 bảng điểm ĐH/CĐ (bản sao hoặc công chứng) + 01 bảng photo."
+  },
+  {
+    "question": "Học phí một học kỳ của chương trình Kỹ sư Chất lượng cao Việt-Pháp (PFIEV) và chương trình Dạy và học bằng tiếng Anh (CTTA) là bao nhiêu?",
+    "ground_truth": "Học phí của chương trình PFIEV là khoảng 15 triệu đồng/học kỳ, và chương trình Dạy và học bằng tiếng Anh (CTTA) là khoảng 40 triệu đồng/học kỳ."
+  },
+  {
+    "question": "Chương trình Tiên tiến ngành KHMT khác gì so với chương trình thường, và yêu cầu tiếng Anh đầu vào là bao nhiêu?",
+    "ground_truth": "Chương trình Tiên tiến ngành Khoa học Máy tính được đào tạo hoàn toàn bằng tiếng Anh, giáo trình chuyển giao từ Đại học Illinois Urbana Champaign (Mỹ). Học phí khoảng 40 triệu đồng/học kỳ. Yêu cầu tiếng Anh đầu vào: IELTS (Academic) ≥ 6.0 hoặc TOEFL iBT ≥ 79 hoặc TOEIC Nghe-Đọc ≥ 730 & Nói-Viết ≥ 280."
+  },
+  {
+    "question": "Trường Bách khoa có ký túc xá không, và ở địa chỉ nào?",
+    "ground_truth": "Có. Ký túc xá Bách khoa dành riêng cho sinh viên tại 497 Hòa Hảo, Phường 7, Quận 10, TP.HCM, sức chứa hơn 1.800 sinh viên. Sinh viên học tại cơ sở 2 có thể ở ký túc xá ĐHQG-HCM tại Đường Tạ Quang Bửu, Khu phố 33, Phường Linh Xuân, TP.HCM, sức chứa hơn 40.000 sinh viên."
+  },
+  {
+    "question": "Thư viện trường mở cửa mấy giờ và nghỉ ngày nào trong tuần?",
+    "ground_truth": "Thư viện mở cửa từ thứ Hai đến thứ Sáu: 7h30–20h00; thứ Bảy: 7h30–17h00; Chủ nhật và ngày lễ: nghỉ."
+  },
+  {
+    "question": "Cơ sở 2 của trường có bao nhiêu tòa nhà và có những tuyến xe buýt nào để đi lại giữa hai cơ sở?",
+    "ground_truth": "Cơ sở 2 gồm 4 tòa: BK-B1, BK-B2, BK-B3, BK-B6. Có 2 tuyến xe buýt để di chuyển giữa 2 cơ sở là tuyến 50 và tuyến 8."
+  },
+  {
+    "question": "Hiệu trưởng hiện tại của Trường Đại học Bách khoa TP.HCM là ai?",
+    "ground_truth": "Hiệu trưởng hiện tại là PGS. TS. Mai Thanh Phong, được bổ nhiệm vào tháng 5 năm 2018."
+  },
+  {
+    "question": "Cơ cấu đào tạo hiện tại của trường gồm bao nhiêu khoa và tổng số lượng sinh viên, học viên cao học là bao nhiêu?",
+    "ground_truth": "Hiện trường đang quản lý 12 Khoa/Trung tâm đào tạo, với tổng số hơn 23.000 sinh viên, trên 2.100 học viên cao học và gần 300 nghiên cứu sinh."
+  },
+  {
+    "question": "Một học kỳ chính ở Bách khoa kéo dài bao nhiêu tuần và sinh viên cần tích lũy bao nhiêu tín chỉ để tốt nghiệp?",
+    "ground_truth": "Một học kỳ chính kéo dài 15 tuần học và 2 tuần thi. Để tốt nghiệp, sinh viên cần tích lũy trung bình 142 tín chỉ."
+  },
+  {
+    "question": "Điểm tối thiểu để qua môn tại Bách khoa là bao nhiêu?",
+    "ground_truth": "Điểm đạt để qua môn là điểm D trở lên, tức điểm 4 trên thang điểm 10."
+  },
+  {
+    "question": "Em thuộc diện hộ nghèo là người dân tộc thiểu số, vậy có được miễn giảm học phí không và nộp hồ sơ ở đâu?",
+    "ground_truth": "Có. Sinh viên là người dân tộc thiểu số thuộc hộ nghèo/cận nghèo thuộc diện được hưởng chế độ miễn giảm học phí của trường. Bạn nộp hồ sơ trực tiếp tại Phòng Công tác Sinh viên."
+  },
+  {
+    "question": "Trường có những loại học bổng nào dành cho sinh viên đang học?",
+    "ground_truth": "Trường có 3 loại học bổng: học bổng loại I, loại II và loại III. Ngoài ra còn có học bổng khuyến khích học tập từ quỹ học phí (8% quỹ học phí, trị giá tới 120% học phí/học kỳ/suất), học bổng từ doanh nghiệp và tổ chức (Uster AG, Groz-Beckert AG, Acecook Việt Nam, ...), học bổng trao đổi quốc tế và chương trình vay ưu đãi 0% lãi suất từ ĐHQG-HCM."
+  },
+  {
+    "question": "Trường có chương trình trao đổi sinh viên hoặc học bổng du học nước ngoài không, cụ thể là những trường và quốc gia nào?",
+    "ground_truth": "Có. Trường cung cấp học bổng trao đổi và học bổng toàn phần Sau đại học tại các đối tác như University of Technology Sydney (Úc), Nanyang University of Technology (Singapore), University of Newcastle (Úc), Pukyong National University (Hàn Quốc). Có chương trình trao đổi với các trường tại Pháp, học bổng vùng, EIFFEL, ERASMUS, và chương trình Việt-Pháp (PFIEV) cho phép học 2 năm tại Pháp hoặc thực tập tốt nghiệp 6 tháng tại Pháp."
+  },
+  {
+    "question": "Khoa Điện - Điện tử của trường đào tạo những ngành và chuyên ngành nào?",
+    "ground_truth": "Khoa Điện - Điện tử đào tạo các ngành: Kỹ thuật Điều khiển và Tự động hóa, Kỹ thuật Điện tử - Viễn thông, Kỹ thuật Điện, Thiết kế vi mạch. Ngoài ra còn có nhiều chương trình Song ngành kết hợp giữa các ngành trên."
+  },
+  {
+    "question": "Khoa Kỹ thuật Giao thông đào tạo những ngành nào vậy ạ?",
+    "ground_truth": "Khoa Kỹ thuật Giao thông đào tạo các ngành: Kỹ thuật Hàng không, Kỹ thuật Ô tô, Kỹ thuật Tàu thủy, và chương trình Song ngành Kỹ thuật Tàu thủy - Hàng không."
+  },
+  {
+    "question": "Ngành Khoa học Máy tính học những môn cơ sở ngành gì và sau khi ra trường có thể làm ở đâu?",
+    "ground_truth": "Các môn cơ sở ngành bao gồm: Nhập môn điện toán, Cấu trúc rời rạc, Hệ thống số, Kỹ thuật lập trình, Cấu trúc dữ liệu và giải thuật, Kiến trúc máy tính, Mô hình hóa toán học, Hệ điều hành, Mạng máy tính, Công nghệ phần mềm, Lập trình nâng cao, Hệ cơ sở và dữ liệu, Nguyên lý ngôn ngữ lập trình. Sau tốt nghiệp, sinh viên có thể làm tại các công ty công nghệ, ngân hàng, công ty tài chính, thương mại điện tử, doanh nghiệp sản xuất và cơ quan nhà nước."
+  },
+  {
+    "question": "Xếp hạng của Trường Đại học Bách khoa TP.HCM trong bảng xếp hạng RUR năm 2024 là bao nhiêu?",
+    "ground_truth": "Trong bảng xếp hạng RUR năm 2024, trường đạt: hạng 866 (World University Rankings), hạng 432 (RUR Reputation Rankings), hạng 776 (RUR Academic Rankings)."
+  },
+  {
+    "question": "Trường Bách khoa có những chứng nhận kiểm định quốc tế nào cho chương trình đào tạo?",
+    "ground_truth": "Trường có các kiểm định cấp chương trình đào tạo quốc tế gồm: ABET, FIBAA và IACEE."
+  },
+  {
+    "question": "Khẩu hiệu và tầm nhìn của Trường Đại học Bách khoa TP.HCM là gì?",
+    "ground_truth": "Khẩu hiệu của trường là \"Khai phóng - Tiên phong - Sáng tạo\". Tầm nhìn là được công nhận toàn cầu là trường đại học hàng đầu trong khu vực về giảng dạy, học tập, nghiên cứu và khởi nghiệp – đổi mới sáng tạo."
+  },
+  {
+    "question": "Em muốn liên hệ với Khoa Khoa học và Kỹ thuật Máy tính thì gửi email cho ai và địa chỉ email là gì?",
+    "ground_truth": "Bạn có thể liên hệ với Trưởng khoa CSE là PGS. TS. Quản Thành Thơ qua email: qttho@hcmut.edu.vn."
+  }
+]

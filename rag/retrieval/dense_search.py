@@ -2,10 +2,7 @@ import numpy as np
 import os
 from sklearn.metrics.pairwise import cosine_similarity
 from google.genai import types
-def dense_search(query: str, embedder, embeddings: np.ndarray, top_k: int = 20):
-    """
-    Dense search đơn giản - chỉ 1 query, trả về [(idx, rank), ...]
-    """
+def dense_search(query, embedder, embeddings, top_k= 20):
  
     result = embedder.models.embed_content(
         model=os.getenv('model_embedding_name'),

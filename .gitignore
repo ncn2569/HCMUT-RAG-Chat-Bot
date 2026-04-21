@@ -46,7 +46,7 @@ Thumbs.db
 # Data files - Không push data lên GitHub (nặng + bảo mật)
 data/raw/
 data/processed/
-*.xlsx
+data cho box thông tin trường-completed.xlsx
 *.csv
 
 # Logs
@@ -57,8 +57,8 @@ data/processed/
 
 *.csv
 
-temp.py
-test_set.json
 crawl_project_src.py
 all_code.txt
-evaluation.py
+
+
+test-report/

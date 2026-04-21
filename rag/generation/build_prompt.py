@@ -5,9 +5,6 @@ load_dotenv('config/.env')
 client = genai.Client(api_key=os.getenv('API_KEY'))
 
 def build_prompt(query: str, contexts: list) -> str:
-    """
-    Build prompt với Role + Context + Constraints
-    """
     # Gộp top 3 QA thành context
     context_text = "\n\n".join([
         f"{text}"
@@ -31,9 +28,6 @@ def build_prompt(query: str, contexts: list) -> str:
     return prompt
 
 def rewrite_query_with_full_history(current_query: str, history: list) -> str:
-    """
-    Viết lại query dựa trên toàn bộ history để tạo standalone query
-    """
     if not history:
         return current_query
 

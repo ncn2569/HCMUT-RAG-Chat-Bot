@@ -1,17 +1,4 @@
-def rrf_fuse(*lists, k=60):
-
-    scores = {}
-
-    for list in lists:
-        for idx,rank in list:
-            scores[idx] = scores.get(idx,0) + 1/(k+rank)
-
-    ranked = sorted(scores.items(), key=lambda x:x[1], reverse=True)
-
-    return ranked
-
-
-def rrf_fuse_test(dense_list, hyde_list, bm25_list, k=60, weights=[1, 1, 2]):
+def rrf_fuse(dense_list, hyde_list, bm25_list, k=60, weights=[1, 0.5, 2]):
 
     scores = {}
     all_lists=[

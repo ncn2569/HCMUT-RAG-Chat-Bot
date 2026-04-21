@@ -19,6 +19,7 @@ class BM25Retriever:
     
         tokenized_corpus =[preprocess_text(text) for text in self.document]
         self.bm25=BM25Okapi(tokenized_corpus)
+    
     def search(self, query,top_k):
         tokenized_query=preprocess_text(query)
         doc_scores=self.bm25.get_scores(tokenized_query) # không lấy luôn chuỗi, để dung hợp vs rrf

@@ -4,9 +4,6 @@ from typing import List, Dict, Optional
 _chat_history: List[Dict] = []  # List: [{"user": str, "assistant": str, "timestamp": str}]
 
 def add_turn(user: str, assistant: str, rewritten: Optional[str] = None) -> None:
-    """
-    Thêm một lượt chat vào history
-    """
     turn = {
         "user": user,
         "assistant": assistant,
@@ -32,8 +29,6 @@ def clear_history() -> None:
     print("History cleared.")
 
 def print_history() -> None:
-    """In lịch sử (debug)"""
-    print("CHAT HISTORY")
     for i, turn in enumerate(_chat_history, 1):
         print(f"\nTurn {i}:")
         print(f"  User: {turn['user']}")

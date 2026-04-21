@@ -24,11 +24,22 @@ Trợ lý tư vấn tuyển sinh thông minh cho Trường Đại học Bách kh
 
 ## 🚀 Tính năng
 
-- **RAG Pipeline**: Kết hợp Dense Search + Sparse Search + HYDE  + RRF Fusion
+- **RAG Pipeline**: Kết hợp Dense Search + Sparse Search + HYDE  + RRF Fusion + Reranker
 - **Chat History**: Quản lý ngữ cảnh hội thoại đa lượt
 - **Query Rewriting**: Tự động viết lại câu hỏi dựa trên lịch sử
 - **Gemini Integration**: Sử dụng Gemma 3 27B cho generation & Gemini Embedding 001 cho retrieval
 
+## 📊 Đánh giá hệ thống (RAGAS Evaluation Metrics)
+
+Hệ thống được đánh giá tự động thông qua framework **RAGAS**, các chỉ số gồm: (context precision + faithfulness + context recall + answer relevance)
+
+
+| Sample User Query | Faithfulness | Context Recall | Answer Relevancy | Context Precision |
+| :--- | :---: | :---: | :---: | :---: |
+| *Mã trường khi em đăng ký xét tuyển vào Bách khoa là gì?* | 1.0 | 1.0 | 0.7997 | 1 |
+| *Em thuộc diện hộ nghèo là người dân tộc thiểu số, vậy có được miễn giảm học phí không và nộp hồ sơ ở đâu?* | 1.0 | 1.0 | 0.8669 | 1.0 |
+| *Khoa Kỹ thuật Giao thông đào tạo những ngành nào vậy ạ?* | 1.0 | 1.0 | 0.8576 | 1.0 |
+| *Ngành Khoa học Máy tính học những môn cơ sở ngành gì và sau khi ra trường có thể làm ở đâu?* | 1.0 | 1.0 | 0.8582 | 1.0 |
 ## 📁 Cấu trúc dự án
 ```text
 hcmut-rag-chatbot/
@@ -43,6 +54,7 @@ hcmut-rag-chatbot/
 │   │   ├── hyde.py            # Hypothetical Document Embedding
 │   │   ├── dense_search.py    # Dense vector search
 │   │   ├── bm25.py            # Sparse search using bm25
+│   │   ├── rerank.py          # Reranker with bge-reranker-v2-m3
 │   │   └── rrf_fuse.py        # Reciprocal Rank Fusion
 │   ├── generation/
 │   │   └── build_prompt.py    # Prompt engineering & query rewriting
@@ -55,9 +67,11 @@ hcmut-rag-chatbot/
 │   └── vectors/               # Vector embeddings (NPY)
 ├── config/
 │   └── .env                   # API keys (tự tạo với API_KEY theo template)
-├── main.py                    # Entry point
+├── main.py                    
+├── evaluation.py              # siêu phiền siêu lâu nếu không sở hữu api key có tiền (nghèo mà chịu thôi)   
+├── report5.xlsx                
 ├── Dockerfile                 
-└── requirements.txt           # Dependencies
+└── requirements.txt           
 ```
 ## 🛠️ Cài đặt
 
@@ -90,8 +104,8 @@ API_KEY="your-gemini-api-key-here"
 model_name="gemma-3-27b-it"
 model_embedding_name="gemini-embedding-001"
 
-# Hugging Face (optional)
-HF_HOME=đường dẫn đến cache hugging face của bạn nếu không có thì sẽ dùng default.
+# Hugging Fac
+HF_HOME=đường dẫn đến cache hugging face của bạn nếu không có thì sẽ dùng default.(mình thì ít ổ C nên cài vào ổ D)
 HF_TOKEN= your huggings face token.
 ```
 🔑 Lấy API key miễn phí tại: Google AI Studio
@@ -125,13 +139,13 @@ HF_TOKEN= your huggings face token.
     python main.py
 ```
 ```text
-🔧 Cách hoạt động (Pipeline)
+⚙️ Cách hoạt động (Pipeline)
 User Query → Query Rewriting (dựa trên history) 
     → HYDE (tạo hypothetical query)
     → Dense Search (2 queries: original + hyde)
     → Sparse Search 
-    → RRF Fusion (k=60)
-    → Top 10 candidates → Top 5 final
+    → RRF Fusion (k=60) ->Top 15 
+    → Reranking -> Top 5 final
     → Build Prompt 
     → Generate Answer
     → Update History
