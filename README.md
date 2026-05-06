@@ -27,13 +27,13 @@ Trợ lý tư vấn tuyển sinh thông minh cho Trường Đại học Bách kh
 - **RAG Pipeline**: Kết hợp Dense Search + Sparse Search + HYDE  + RRF Fusion + Reranker
 - **Chat History**: Quản lý ngữ cảnh hội thoại đa lượt
 - **Query Rewriting**: Tự động viết lại câu hỏi dựa trên lịch sử
-- **Gemini Integration**: Sử dụng Gemma 3 27B cho generation & Gemini Embedding 001 cho retrieval
+- **Gemini Integration**: Sử dụng Gemma 4 31B cho generation & Gemini Embedding 001 cho retrieval
 
 ## 📊 Đánh giá hệ thống (RAGAS Evaluation Metrics)
 
 Hệ thống được đánh giá tự động thông qua framework **RAGAS**, các chỉ số gồm: (context precision + faithfulness + context recall + answer relevance).
 
-Chấm bằng gemini 3 flash lite, thằng này thì nó đần hơn gemma 3 27b mình dùng để trả lời nhưng mà nó là con free duy nhất mà mình chạy mượt với ragas, mấy thằng khác thì nó không hỗ trợ hoặc lâu vl hoặc trả phí.
+Chấm bằng gemini 3 flash lite, thằng này thì nó đần hơn gemma 4 31b mình dùng để trả lời nhưng mà nó là con free duy nhất mà mình chạy mượt với ragas, mấy thằng khác thì nó không hỗ trợ hoặc lâu vl hoặc trả phí.
 
 | Sample User Query | Faithfulness | Context Recall | Answer Relevancy | Context Precision |
 | :--- | :---: | :---: | :---: | :---: |
@@ -102,7 +102,7 @@ Tạo file `config/.env` với nội dung:
 ```env
 # Google Gemini API
 API_KEY="your-gemini-api-key-here"
-model_name="gemma-3-27b-it"
+model_name="gemma-4-31b-it" * gg mới update
 model_embedding_name="gemini-embedding-001"
 
 # Hugging Fac
@@ -141,11 +141,11 @@ HF_TOKEN= your huggings face token.
 ```
 ```text
 ⚙️ Cách hoạt động (Pipeline)
-User Query → Query Rewriting (dựa trên history) 
-    → HYDE (tạo hypothetical query)
-    → Dense Search (2 queries: original + hyde)
-    → Sparse Search 
-    → RRF Fusion (k=60) ->Top 15 
+User Query → Query Rewriting (dựa trên history 5 lượt) 
+    → HYDE (tạo hypothetical query dựa trên query gốc của người dùng) (tác giả đang xem xét bỏ bước này vì hơi lâu và hơi thừa và hơi tốn.)
+    → Dense Search (từ 2 queries: original + hyde)
+    → Sparse Search (bm25)
+    → Weighted RRF Fusion (k=60) ->Top 15 
     → Reranking -> Top 5 final
     → Build Prompt 
     → Generate Answer
