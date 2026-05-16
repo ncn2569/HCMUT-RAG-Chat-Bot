@@ -152,3 +152,5 @@ User Query → Query Rewriting (dựa trên history 5 lượt)
     → Update History
 ```
 
+
+Nghiên cứu phát triển thêm về lịch sử (long term + short term) + với tổ chức local llm để giảm thiểu chi phí cx như vấn đề về việc phụ thuộc
