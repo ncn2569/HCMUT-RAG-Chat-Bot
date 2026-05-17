@@ -20,15 +20,17 @@ def generate_hypothetical_query(query, model_name=os.getenv('model_name')):
 
     Câu hỏi tương tự:"""
 
-    response = client.models.generate_content(
-        model=os.getenv('model_name'),
-        contents=prompt
-    )
-
-    hypothetical = response.text.strip() if response.text else query
-
-    hypothetical = hypothetical.split("\n")[0].strip()
-    hypothetical = re.sub(r'^(Câu hỏi tương tự[:：]\s*)', '', hypothetical)
+    try:
+        response = client.models.generate_content(
+            model=os.getenv('model_name'),
+            contents=prompt
+        )
+        hypothetical = response.text.strip() if response.text else query
+        hypothetical = hypothetical.split("\n")[0].strip()
+        hypothetical = re.sub(r'^(Câu hỏi tương tự[:：]\s*)', '', hypothetical)
+    except Exception as e:
+        print(f"Error ở bước Hyde: {e}")
+        hypothetical = query
 
     return hypothetical
 

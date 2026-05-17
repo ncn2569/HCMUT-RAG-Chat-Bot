@@ -50,13 +50,16 @@ def rag_query(current_query):
 
     prompt = build_prompt(rewritten, contexts)
     # print("testing",len(prompt))
+    try:
+        response = client.models.generate_content(
+            model=os.getenv('model_name'),
+            contents=prompt
+        )
 
-    response = client.models.generate_content(
-        model=os.getenv('model_name'),
-        contents=prompt
-    )
-
-    answer = response.text.strip() 
+        answer = response.text.strip() 
+    except Exception as e:
+        print(f"Error: {e}")
+        answer = "Có lỗi xảy ra r bạn oi, :)))) thử lại giúp mình sau nha, có thể là google đang nghẽn sever ấy mà hem sao đâu. Xí nữa hỏi lại nhen."
     add_turn(current_query, answer, rewritten)
 
     # print_history() #debugging

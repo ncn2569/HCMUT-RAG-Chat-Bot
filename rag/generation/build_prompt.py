@@ -51,11 +51,15 @@ def rewrite_query_with_full_history(current_query: str, history: list) -> str:
 
     Câu hỏi đã viết lại:"""
 
-    response = client.models.generate_content(
-        model=os.getenv('model_name'),
-        contents=rewrite_prompt
-    )
-
-    rewritten = response.text.strip() if response.text else current_query
-    rewritten = rewritten.strip('"').strip("'")
+    try:
+        response = client.models.generate_content(
+            model=os.getenv('model_name'),
+            contents=rewrite_prompt
+        )
+        rewritten = response.text.strip() if response.text else current_query
+        rewritten = rewritten.strip('"').strip("'")
+    except Exception as e:
+        print(f"Error ở bước rewrite: {e}")
+        rewritten = current_query 
+        
     return rewritten
