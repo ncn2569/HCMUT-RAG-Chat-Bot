@@ -11,26 +11,3 @@ def chunking(excel_path,output_path):
             }
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
-# chunking('../../data/raw/data cho box thông tin trường-completed.xlsx','../../data/processed/data-cleaned.jsonl')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def chunking_study(path1,path2):
-    pass
