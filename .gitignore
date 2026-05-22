@@ -59,6 +59,5 @@ data cho box thông tin trường-completed.xlsx
 
 crawl_project_src.py
 all_code.txt
+benchmark_latency.py
 
-
-test-report/

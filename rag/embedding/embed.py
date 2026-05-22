@@ -35,11 +35,11 @@ def embedding():
         print(f"Embedded {min(i + batch_size, len(texts))}/{len(texts)}")
 
     embeddings = np.array(all_embeddings)
-    np.save('data/vectors/vectors2.npy', embeddings)
+    np.save('data/vectors/vectors1.npy', embeddings)
 
-    with open('data/vectors/vectors2.jsonl', 'w', encoding='utf-8') as f:
+    with open('data/vectors/vectors1.jsonl', 'w', encoding='utf-8') as f:
         for chunk in chunks:
             f.write(json.dumps({"text": chunk['text']}, ensure_ascii=False) + '\n')
 
-    print(f"\nSaved: vectors2.npy {embeddings.shape}")
-    print(f"Saved: vectors2.jsonl ({len(chunks)} items)")
+    print(f"\nSaved: vectors1.npy {embeddings.shape}")
+    print(f"Saved: vectors1.jsonl ({len(chunks)} items)")

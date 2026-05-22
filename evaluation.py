@@ -11,7 +11,10 @@ from rag.embedding.embed import load_embedder
 import google.generativeai as genai
 from ragas import evaluate
 from ragas.llms import llm_factory
-from ragas.metrics import Faithfulness,LLMContextPrecisionWithReference,LLMContextRecall,ResponseRelevancy #khổ vcl
+from ragas.metrics._faithfulness import Faithfulness
+from ragas.metrics._context_precision import LLMContextPrecisionWithReference
+from ragas.metrics._context_recall import LLMContextRecall
+from ragas.metrics._answer_relevance import ResponseRelevancy
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from ragas import RunConfig
 from rag.pipeline import rag_query_test

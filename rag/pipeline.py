@@ -18,12 +18,13 @@ from rag.retrieval.rrf_fuse import rrf_fuse
 from rag.generation.build_prompt import build_prompt,rewrite_query_with_full_history
 from rag.embedding.embed import load_embedder
 from rag.chat.history import get_history, add_turn, print_history
+from rag.routing.query_router import classify_query
 from rag.retrieval.bm25 import BM25Retriever
 embedder=load_embedder()
-embeddings = np.load('data/vectors/vectors2.npy')
-bm25=BM25Retriever('data/vectors/vectors2.jsonl')
+embeddings = np.load('data/vectors/vectors1.npy')
+bm25=BM25Retriever('data/vectors/vectors1.jsonl')
 data = []
-with open('data/vectors/vectors2.jsonl', "r", encoding="utf-8") as f:
+with open('data/vectors/vectors1.jsonl', "r", encoding="utf-8") as f:
     for line in f:
         line = line.strip()
         if line:
@@ -33,15 +34,23 @@ def rag_query(current_query):
     history = get_history()
     #Rewrite query 
     rewritten = rewrite_query_with_full_history(current_query, history)
-    # HYDE
-    hyde_query = generate_hypothetical_query(rewritten)
-    #dense search
-    dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-    dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10)
-    #bm25 search (mạnh vl)
-    bm25_result=bm25.search(rewritten,top_k=10)
-    #weights có thể bỏ nhưng không thích lắm
-    rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,0.5,2.5])
+    #query router
+    query_type = classify_query(rewritten, client, os.getenv('model_name'))
+    if query_type == 'SIMPLE':
+        dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
+        bm25_result=bm25.search(rewritten,top_k=10)
+        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[0.5,1.0])
+    elif query_type == 'COMPLEX':
+        hyde_query = generate_hypothetical_query(rewritten)
+        dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
+        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10)
+        bm25_result=bm25.search(rewritten,top_k=10)
+        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,0.5,2.0])
+    #OUT OF SCOPE:
+    elif query_type == 'OUT_OF_SCOPE':
+        answer= "Xin lỗi tôi chỉ trả lời những thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh, nếu có câu hỏi liên quan đến trường xin hãy cho tôi biết."
+        add_turn(current_query, answer, rewritten)
+        return answer
     #rerank (cherry on the top)
     rerank_list = rrf_list[:15]
     final_list = rerank(rewritten, rerank_list,data, top_k=5)
@@ -49,7 +58,6 @@ def rag_query(current_query):
     contexts = [data[idx]["text"] for idx, _ in final_list]
 
     prompt = build_prompt(rewritten, contexts)
-    # print("testing",len(prompt))
     try:
         response = client.models.generate_content(
             model=os.getenv('model_name'),
@@ -74,23 +82,43 @@ def reset_history():
 # hàm để test ragas, không cần bận tâm
 def rag_query_test(current_query):
     history = get_history()
+    #Rewrite query 
     rewritten = rewrite_query_with_full_history(current_query, history)
-    hyde_query = generate_hypothetical_query(rewritten)
-    dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-    dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10)
-    bm25_result=bm25.search(rewritten,top_k=10)
-    rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,0.5,2.5])
+    #query router
+    query_type = classify_query(rewritten, client, os.getenv('model_name'))
+    if query_type == 'SIMPLE':
+        dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
+        bm25_result=bm25.search(rewritten,top_k=10)
+        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[0.5,1.0])
+    elif query_type == 'COMPLEX':
+        hyde_query = generate_hypothetical_query(rewritten)
+        dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
+        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10)
+        bm25_result=bm25.search(rewritten,top_k=10)
+        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,0.5,2.0])
+    #OUT OF SCOPE:
+    elif query_type == 'OUT_OF_SCOPE':
+        answer= "Xin lỗi tôi chỉ trả lời những thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh, nếu có câu hỏi liên quan đến trường xin hãy cho tôi biết."
+        add_turn(current_query, answer, rewritten)
+        return answer
     #rerank (cherry on the top)
     rerank_list = rrf_list[:15]
     final_list = rerank(rewritten, rerank_list,data, top_k=5)
+    
     contexts = [data[idx]["text"] for idx, _ in final_list]
+
     prompt = build_prompt(rewritten, contexts)
-    # print("testing",len(prompt))
-    response = client.models.generate_content(
-        model=os.getenv('model_name'),
-        contents=prompt
-    )
-    answer = response.text.strip() 
+    try:
+        response = client.models.generate_content(
+            model=os.getenv('model_name'),
+            contents=prompt
+        )
+
+        answer = response.text.strip() 
+    except Exception as e:
+        print(f"Error: {e}")
+        answer = "Có lỗi xảy ra r bạn oi, :)))) thử lại giúp mình sau nha, có thể là google đang nghẽn sever ấy mà hem sao đâu. Xí nữa hỏi lại nhen."
     add_turn(current_query, answer, rewritten)
-    # print_history() #debugging step
+
+    # print_history() #debugging
     return answer,contexts

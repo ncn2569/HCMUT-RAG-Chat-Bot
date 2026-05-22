@@ -92,10 +92,6 @@
     "ground_truth": "Có. Trường cung cấp học bổng trao đổi và học bổng toàn phần Sau đại học tại các đối tác như University of Technology Sydney (Úc), Nanyang University of Technology (Singapore), University of Newcastle (Úc), Pukyong National University (Hàn Quốc). Có chương trình trao đổi với các trường tại Pháp, học bổng vùng, EIFFEL, ERASMUS, và chương trình Việt-Pháp (PFIEV) cho phép học 2 năm tại Pháp hoặc thực tập tốt nghiệp 6 tháng tại Pháp."
   },
   {
-    "question": "Khoa Điện - Điện tử của trường đào tạo những ngành và chuyên ngành nào?",
-    "ground_truth": "Khoa Điện - Điện tử đào tạo các ngành: Kỹ thuật Điều khiển và Tự động hóa, Kỹ thuật Điện tử - Viễn thông, Kỹ thuật Điện, Thiết kế vi mạch. Ngoài ra còn có nhiều chương trình Song ngành kết hợp giữa các ngành trên."
-  },
-  {
     "question": "Khoa Kỹ thuật Giao thông đào tạo những ngành nào vậy ạ?",
     "ground_truth": "Khoa Kỹ thuật Giao thông đào tạo các ngành: Kỹ thuật Hàng không, Kỹ thuật Ô tô, Kỹ thuật Tàu thủy, và chương trình Song ngành Kỹ thuật Tàu thủy - Hàng không."
   },
@@ -118,5 +114,17 @@
   {
     "question": "Em muốn liên hệ với Khoa Khoa học và Kỹ thuật Máy tính thì gửi email cho ai và địa chỉ email là gì?",
     "ground_truth": "Bạn có thể liên hệ với Trưởng khoa CSE là PGS. TS. Quản Thành Thơ qua email: qttho@hcmut.edu.vn."
+  },
+  {
+    "question": "Khoa Điện - Điện tử của Trường có những chương trình song ngành nào?",
+    "ground_truth": "Khoa Điện - Điện tử có 6 chương trình song ngành: Điện tử-Viễn thông & Kỹ thuật Điện; Điện tử-Viễn thông & Điều khiển-Tự động hóa; Kỹ thuật Điện & Điện tử-Viễn thông; Kỹ thuật Điện & Điều khiển-Tự động hóa; Điều khiển-Tự động hóa & Điện tử-Viễn thông; Điều khiển-Tự động hóa & Kỹ thuật Điện."
+  },
+  {
+    "question": "Trường Bách khoa HCM có những loại hình chương trình đào tạo nào?",
+    "ground_truth": "Trường HCMUT có 5 loại hình đào tạo: Chương trình CQ (tiêu chuẩn tiếng Việt), Chương trình CTTA (dạy và học bằng tiếng Anh), Chương trình CTTT Tiên tiến (giáo trình quốc tế), Chương trình CTQT chuyển tiếp quốc tế (Úc, Mỹ, New Zealand), và Chương trình CTHNB/CTNB định hướng Nhật Bản."
+  },
+  {
+    "question": "Học phí của trường được thanh toán vào thời gian nào?",
+    "ground_truth": "Học phí tại Trường HCMUT được thanh toán bắt đầu từ tuần 12 của mỗi học kỳ. Sinh viên có thể nộp qua cổng MyBK hoặc các kênh thanh toán của trường."
   }
 ]
