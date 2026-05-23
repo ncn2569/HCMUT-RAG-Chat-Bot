@@ -24,10 +24,11 @@ Trợ lý tư vấn tuyển sinh thông minh cho Trường Đại học Bách kh
 
 ## 🚀 Tính năng
 
-- **RAG Pipeline**: Kết hợp Dense Search + Sparse Search + HYDE  + RRF Fusion + Reranker
-- **Chat History**: Quản lý ngữ cảnh hội thoại đa lượt
-- **Query Rewriting**: Tự động viết lại câu hỏi dựa trên lịch sử
-- **Gemini Integration**: Sử dụng Gemma 4 31B cho generation & Gemini Embedding 001 cho retrieval
+- **RAG Pipeline**: Kết hợp Dense Search + Sparse Search + HYDE + RRF Fusion + Reranker.
+- **Two-Stage Semantic Cache**: Tối ưu tốc độ cực sướng (< 0.5s) bằng kiến trúc Cache 2 tầng (Vector Search + Cross-Encoder Reranker) và lưu trữ bất đồng bộ (Asynchronous).
+- **Query Rewriting & Routing**: Gộp chung bước phân loại câu hỏi (Simple/Complex) và viết lại câu hỏi vào 1 lượt gọi API duy nhất, giảm triệt để độ trễ.
+- **Chat History**: Quản lý ngữ cảnh hội thoại đa lượt.
+- **Gemini Integration**: Sử dụng Gemma 4 31B cho generation & Gemini Embedding 001 cho retrieval.
 
 ## 📊 Đánh giá hệ thống (RAGAS Evaluation Metrics)
 
@@ -141,15 +142,15 @@ HF_TOKEN= your huggings face token.
 ```
 ```text
 ⚙️ Cách hoạt động (Pipeline)
-User Query → Query Rewriting (dựa trên history 5 lượt) 
-    → HYDE (tạo hypothetical query dựa trên query gốc của người dùng) (tác giả đang xem xét bỏ bước này vì hơi lâu và hơi thừa và hơi tốn.)
-    → Dense Search (từ 2 queries: original + hyde)
-    → Sparse Search (bm25)
-    → Weighted RRF Fusion (k=60) ->Top 15 
-    → Reranking -> Top 5 final
-    → Build Prompt 
-    → Generate Answer
-    → Update History
+User Query 
+    → Đi qua Semantic Cache (Vector Search + Reranker). Nếu Hit -> Trả kết quả ngay (0.5s).
+    → Nếu Miss -> Query Rewriting & Routing (Gộp 2 bước vào 1 API call).
+    → (Nếu Complex) HYDE (tạo hypothetical query).
+    → Dense Search + Sparse Search (bm25).
+    → Weighted RRF Fusion (k=60) -> Top 15. 
+    → Reranking -> Top 5 final.
+    → Build Prompt & Generate Answer.
+    → Lưu ngầm câu trả lời vào Semantic Cache (Asynchronous) & Cập nhật History.
 ```
 
 
