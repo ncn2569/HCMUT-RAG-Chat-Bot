@@ -1,5 +1,6 @@
 import streamlit as st
 from rag.pipeline import rag_query,reset_history
+from rag.chat.semantic_cache import semantic_cache
 st.set_page_config(page_title="HCMUT-NCN-Chatbot", page_icon="🎓", layout="centered")
 with st.sidebar:
     st.title("⚙️ Config zone")
@@ -11,6 +12,10 @@ with st.sidebar:
         ]
         reset_history() 
         st.rerun() 
+        
+    if st.button("🗑️ Dọn dẹp Semantic Cache", use_container_width=True):
+        semantic_cache.flush()
+        st.toast("Đã xóa sạch bộ nhớ đệm!", icon="✅")
         
     st.divider() 
     st.caption("Lưu ý: Data là bản thân mình tự crawl nên có thể còn hơn ít và hạn chế nhưng đảm bảo 80 dòng này dòng nào cũng tràn đầy tâm huyết.")
