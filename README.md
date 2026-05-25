@@ -153,6 +153,4 @@ User Query
     → Lưu ngầm câu trả lời vào Semantic Cache (Asynchronous) & Cập nhật History.
 ```
 
-
-Nghiên cứu phát triển thêm về lịch sử (long term + short term) + với tổ chức local llm để giảm thiểu chi phí cx như vấn đề về việc phụ thuộc
-Có thể là dùng các mô hình llm nhỏ hơn để chạy thử nhưng chi phí quá cao, nên sợ không biết có local host được các model đó không và đang nghiên cứu thêm tool vào cho chatbot của tôi nữa.
+nhiên cứu host local + add tools + với triển khai thành agents chứ thật sự là không biết làm gì RAG này nữa.

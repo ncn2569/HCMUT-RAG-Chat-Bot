@@ -62,7 +62,7 @@ def eval():
     final_results =[]
 
     #RPM của gemini 3.1 flash (không được overaload nặng quá tính vừa đủ sẽ bị vượt TPM liên tục, lỗi của ragas)
-    for i in range(0,len(dataset),1): 
+    for i in range(0,len(dataset),2): 
         chunk=dataset.select(range(i,min(i+2,len(dataset))))
         result=evaluate(
             dataset=chunk,
