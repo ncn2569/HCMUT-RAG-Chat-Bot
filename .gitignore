@@ -62,3 +62,4 @@ all_code.txt
 benchmark_latency.py
 evaluation_retrieval.py
 test_api_health.py
+evaluate_hyde_tuning.py

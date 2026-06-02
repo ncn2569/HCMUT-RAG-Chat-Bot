@@ -12,13 +12,12 @@ client = genai.Client(api_key=os.getenv('API_KEY'))
 
 from rag.retrieval.rerank import rerank
 from rag.chat.history import clear_history
-from rag.retrieval.hyde import generate_hypothetical_query
+from rag.retrieval.hyde import generate_hypothetical_query,generate_hypothetical_document
 from rag.retrieval.dense_search import dense_search
 from rag.retrieval.rrf_fuse import rrf_fuse
 from rag.generation.build_prompt import build_prompt, rewrite_and_classify_query
 from rag.embedding.embed import load_embedder
 from rag.chat.history import get_history, add_turn, print_history
-from rag.routing.query_router import classify_query
 from rag.chat.semantic_cache import semantic_cache
 from rag.retrieval.bm25 import BM25Retriever
 embedder=load_embedder()
@@ -44,13 +43,13 @@ def rag_query(current_query):
     if query_type == 'SIMPLE':
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
         bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[0.5,1.0])
+        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[1.0,1.0])
     elif query_type == 'COMPLEX':
-        hyde_query = generate_hypothetical_query(rewritten)
+        hyde_query = generate_hypothetical_document(rewritten)
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10)
+        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10,is_hyde=True)
         bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,0.5,2.0])
+        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,1.0,1.0])
     #rerank (cherry on the top)
     rerank_list = rrf_list[:15]
     final_list = rerank(rewritten, rerank_list,data, top_k=5)
@@ -72,7 +71,7 @@ def rag_query(current_query):
 
     # 2. Lưu vào Cache (chỉ khi không có lỗi)
     if "Có lỗi xảy ra" not in answer:
-        semantic_cache.add(current_query, answer)
+        semantic_cache.add(rewritten, answer)
 
     # print_history() #debugging
     return answer
@@ -91,18 +90,14 @@ def rag_query_test(current_query):
     if query_type == 'SIMPLE':
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
         bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[0.5,1.0])
+        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[1.0,1.0])
     elif query_type == 'COMPLEX':
-        hyde_query = generate_hypothetical_query(rewritten)
+        hyde_query = generate_hypothetical_document(rewritten)
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10)
+        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10,is_hyde=True)
         bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,0.5,2.0])
-    #OUT OF SCOPE:
-    elif query_type == 'OUT_OF_SCOPE':
-        answer= "Xin lỗi tôi chỉ trả lời những thông tin liên quan đến Trường Đại Học Bách Khoa Thành Phố Hồ Chí Minh, nếu có câu hỏi liên quan đến trường xin hãy cho tôi biết."
-        add_turn(current_query, answer, rewritten)
-        return answer
+        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,1.0,1.0])
+    
     #rerank (cherry on the top)
     rerank_list = rrf_list[:15]
     final_list = rerank(rewritten, rerank_list,data, top_k=5)

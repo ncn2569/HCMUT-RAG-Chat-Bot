@@ -34,3 +34,31 @@ def generate_hypothetical_query(query, model_name=os.getenv('model_name')):
 
     return hypothetical
 
+def generate_hypothetical_document(query, model_name=os.getenv('model_name')):
+
+    prompt = f"""Bạn đang hỗ trợ hệ thống tìm kiếm tài liệu.
+
+    Hãy đóng vai một chuyên gia và viết một đoạn văn bản ngắn (khoảng 2-3 câu) trực tiếp trả lời hoặc cung cấp thông tin liên quan cho câu hỏi dưới đây.
+    Mục tiêu là tạo ra một "tài liệu giả định" (hypothetical document) chứa các từ khóa và ngữ cảnh tự nhiên có khả năng xuất hiện trong tài liệu thật trong cơ sở dữ liệu.
+
+    Hướng dẫn:
+    - Trả lời trực tiếp, dạng văn trần thuật cung cấp thông tin (không viết lại câu hỏi).
+    - Dùng từ vựng và văn phong trang trọng, học thuật liên quan đến ngữ cảnh trường đại học.
+    - Chỉ trả về nội dung đoạn văn, tuyệt đối không giải thích thêm.
+
+    Câu hỏi gốc: {query}
+
+    Tài liệu giả định:"""
+
+    try:
+        response = client.models.generate_content(
+            model=os.getenv('model_name'),
+            contents=prompt
+        )
+        hypothetical = response.text.strip() if response.text else query
+        hypothetical = re.sub(r'^(Tài liệu giả định[:：]\s*)', '', hypothetical, flags=re.IGNORECASE)
+    except Exception as e:
+        print(f"Error ở bước Hyde (Document): {e}")
+        hypothetical = query
+
+    return hypothetical
