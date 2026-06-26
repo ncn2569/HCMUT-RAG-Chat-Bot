@@ -2,7 +2,7 @@
 
 Tài liệu này mô tả chi tiết cơ chế hoạt động của Agent tư vấn tuyển sinh Đại học Bách Khoa TP.HCM (HCMUT). 
 
-Thay vì sử dụng luồng RAG cơ bản (Hỏi -> Tìm Vector -> Trả lời), hệ thống hiện tại đã được nâng cấp lên chuẩn **Agentic RAG**, kết hợp giữa 2 mô hình thiết kế nổi tiếng là **Plan-and-Execute** (Lên kế hoạch và Thực thi) và **Adaptive RAG / Self-Reflection** (Tự đánh giá).
+Thay vì sử dụng luồng RAG cơ bản (Hỏi -> Tìm Vector -> Trả lời), hệ thống hiện tại đã được nâng cấp lên chuẩn **Agentic RAG**, kết hợp giữa 2 mô hình thiết kế nổi tiếng là **Plan-and-Execute** (Lên kế hoạch và Thực thi) và **Adaptive RAG / Self-Reflection** (Tự đánh giá - vẫn còn đang hard code).
 
 ---
 

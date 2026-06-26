@@ -1,69 +1,74 @@
 import json
+import os
+from google import genai
+
 import numpy as np
 from dotenv import load_dotenv
 
-import os
-load_dotenv('config/.env')
-hf_home= os.getenv("HF_HOME")
+load_dotenv("config/.env")
+hf_home = os.getenv("HF_HOME")
 if hf_home is not None:
-    os.environ["HF_HOME"] = hf_home # vấn đề bộ nhớ giá như có thêm tiền
-from google import genai
-client = genai.Client(api_key=os.getenv('API_KEY'))
+    os.environ["HF_HOME"] = hf_home  # vấn đề bộ nhớ giá như có thêm tiền
 
-from rag.retrieval.rerank import rerank
-from rag.chat.history import clear_history
-from rag.retrieval.hyde import generate_hypothetical_query,generate_hypothetical_document
-from rag.retrieval.dense_search import dense_search
-from rag.retrieval.rrf_fuse import rrf_fuse
-from rag.generation.build_prompt import build_prompt, rewrite_and_classify_query
-from rag.embedding.embed import load_embedder
-from rag.chat.history import get_history, add_turn, print_history
+client = genai.Client(api_key=os.getenv("API_KEY"))
+
+from rag.chat.history import add_turn, clear_history, get_history
 from rag.chat.semantic_cache import semantic_cache
+from rag.embedding.embed import load_embedder
+from rag.generation.build_prompt import build_prompt, rewrite_and_classify_query
 from rag.retrieval.bm25 import BM25Retriever
-embedder=load_embedder()
-embeddings = np.load('data/vectors/vectors1.npy')
-bm25=BM25Retriever('data/vectors/vectors1.jsonl')
+from rag.retrieval.dense_search import dense_search
+from rag.retrieval.hyde import (
+    generate_hypothetical_document,
+)
+from rag.retrieval.rerank import rerank
+from rag.retrieval.rrf_fuse import rrf_fuse
+
+embedder = load_embedder()
+embeddings = np.load("data/vectors/vectors1.npy")
+bm25 = BM25Retriever("data/vectors/vectors1.jsonl")
 data = []
-with open('data/vectors/vectors1.jsonl', "r", encoding="utf-8") as f:
+with open("data/vectors/vectors1.jsonl", "r", encoding="utf-8") as f:
     for line in f:
-        line = line.strip()
-        if line:
-            data.append(json.loads(line))  
+        if line := line.strip():
+            data.append(json.loads(line))
+
 
 def rag_query(current_query):
-    # 1. Kiểm tra Semantic Cache để trả lời tức thì
-    cached_answer = semantic_cache.check(current_query)
-    if cached_answer:
+    if cached_answer := semantic_cache.check(current_query):
         add_turn(current_query, cached_answer, current_query)
         return cached_answer
 
     history = get_history()
     # Rewrite and Classify query in 1 API call
     rewritten, query_type = rewrite_and_classify_query(current_query, history)
-    if query_type == 'SIMPLE':
+    if query_type == "SIMPLE":
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-        bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[1.0,1.0])
-    elif query_type == 'COMPLEX':
+        bm25_result = bm25.search(rewritten, top_k=10)
+        rrf_list = rrf_fuse(dense_orig, bm25_result, k=60, weights=[1.0, 1.0])
+    elif query_type == "COMPLEX":
         hyde_query = generate_hypothetical_document(rewritten)
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10,is_hyde=True)
-        bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,1.0,1.0])
-    #rerank (cherry on the top)
+        dense_hyde = dense_search(
+            hyde_query, embedder, embeddings, top_k=10, is_hyde=True
+        )
+        bm25_result = bm25.search(rewritten, top_k=10)
+        rrf_list = rrf_fuse(
+            dense_orig, dense_hyde, bm25_result, k=60, weights=[1.0, 1.0, 1.0]
+        )
+    # rerank (cherry on the top)
     rerank_list = rrf_list[:15]
-    final_list = rerank(rewritten, rerank_list,data, top_k=5)
-    
+    final_list = rerank(rewritten, rerank_list, data, top_k=5)
+
     contexts = [data[idx]["text"] for idx, _ in final_list]
 
     prompt = build_prompt(rewritten, contexts)
     try:
         response = client.models.generate_content(
-            model=os.getenv('model_name'),
-            contents=prompt
+            model=os.getenv("model_name"), contents=prompt
         )
 
-        answer = response.text.strip() 
+        answer = response.text.strip()
     except Exception as e:
         print(f"Error: {e}")
         answer = "Có lỗi xảy ra r bạn oi, :)))) thử lại giúp mình sau nha, có thể là google đang nghẽn sever ấy mà hem sao đâu. Xí nữa hỏi lại nhen."
@@ -76,46 +81,49 @@ def rag_query(current_query):
     # print_history() #debugging
     return answer
 
+
 def reset_history():
     """Reset lịch sử chat"""
     clear_history()
 
 
-    
 # hàm để test ragas, không cần bận tâm
 def rag_query_test(current_query):
     history = get_history()
     # Rewrite and Classify query in 1 API call
     rewritten, query_type = rewrite_and_classify_query(current_query, history)
-    if query_type == 'SIMPLE':
+    if query_type == "SIMPLE":
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-        bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,bm25_result,k=60,weights=[1.0,1.0])
-    elif query_type == 'COMPLEX':
+        bm25_result = bm25.search(rewritten, top_k=10)
+        rrf_list = rrf_fuse(dense_orig, bm25_result, k=60, weights=[1.0, 1.0])
+    elif query_type == "COMPLEX":
         hyde_query = generate_hypothetical_document(rewritten)
         dense_orig = dense_search(rewritten, embedder, embeddings, top_k=10)
-        dense_hyde = dense_search(hyde_query, embedder, embeddings, top_k=10,is_hyde=True)
-        bm25_result=bm25.search(rewritten,top_k=10)
-        rrf_list=rrf_fuse(dense_orig,dense_hyde,bm25_result,k=60,weights=[1.0,1.0,1.0])
-    
-    #rerank (cherry on the top)
+        dense_hyde = dense_search(
+            hyde_query, embedder, embeddings, top_k=10, is_hyde=True
+        )
+        bm25_result = bm25.search(rewritten, top_k=10)
+        rrf_list = rrf_fuse(
+            dense_orig, dense_hyde, bm25_result, k=60, weights=[1.0, 1.0, 1.0]
+        )
+
+    # rerank (cherry on the top)
     rerank_list = rrf_list[:15]
-    final_list = rerank(rewritten, rerank_list,data, top_k=5)
-    
+    final_list = rerank(rewritten, rerank_list, data, top_k=5)
+
     contexts = [data[idx]["text"] for idx, _ in final_list]
 
     prompt = build_prompt(rewritten, contexts)
     try:
         response = client.models.generate_content(
-            model=os.getenv('model_name'),
-            contents=prompt
+            model=os.getenv("model_name"), contents=prompt
         )
 
-        answer = response.text.strip() 
+        answer = response.text.strip()
     except Exception as e:
         print(f"Error: {e}")
         answer = "Có lỗi xảy ra r bạn oi, :)))) thử lại giúp mình sau nha, có thể là google đang nghẽn sever ấy mà hem sao đâu. Xí nữa hỏi lại nhen."
     add_turn(current_query, answer, rewritten)
 
     # print_history() #debugging
-    return answer,contexts
+    return answer, contexts

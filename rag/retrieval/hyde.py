@@ -2,9 +2,12 @@ import re
 from google import genai
 from dotenv import load_dotenv
 import os
-load_dotenv('config/.env')
-client = genai.Client(api_key=os.getenv('API_KEY'))
-def generate_hypothetical_query(query, model_name=os.getenv('model_name')):
+
+load_dotenv("config/.env")
+client = genai.Client(api_key=os.getenv("API_KEY"))
+
+
+def generate_hypothetical_query(query, model_name=os.getenv("model_name")):
 
     prompt = f"""Bạn đang hỗ trợ hệ thống tìm kiếm trong cơ sở dữ liệu hỏi đáp.
 
@@ -22,19 +25,19 @@ def generate_hypothetical_query(query, model_name=os.getenv('model_name')):
 
     try:
         response = client.models.generate_content(
-            model=os.getenv('model_name'),
-            contents=prompt
+            model=os.getenv("model_name"), contents=prompt
         )
         hypothetical = response.text.strip() if response.text else query
         hypothetical = hypothetical.split("\n")[0].strip()
-        hypothetical = re.sub(r'^(Câu hỏi tương tự[:：]\s*)', '', hypothetical)
+        hypothetical = re.sub(r"^(Câu hỏi tương tự[:：]\s*)", "", hypothetical)
     except Exception as e:
         print(f"Error ở bước Hyde: {e}")
         hypothetical = query
 
     return hypothetical
 
-def generate_hypothetical_document(query, model_name=os.getenv('model_name')):
+
+def generate_hypothetical_document(query, model_name=os.getenv("model_name")):
 
     prompt = f"""Bạn đang hỗ trợ hệ thống tìm kiếm tài liệu.
 
@@ -52,11 +55,12 @@ def generate_hypothetical_document(query, model_name=os.getenv('model_name')):
 
     try:
         response = client.models.generate_content(
-            model=os.getenv('model_name'),
-            contents=prompt
+            model=os.getenv("model_name"), contents=prompt
         )
         hypothetical = response.text.strip() if response.text else query
-        hypothetical = re.sub(r'^(Tài liệu giả định[:：]\s*)', '', hypothetical, flags=re.IGNORECASE)
+        hypothetical = re.sub(
+            r"^(Tài liệu giả định[:：]\s*)", "", hypothetical, flags=re.IGNORECASE
+        )
     except Exception as e:
         print(f"Error ở bước Hyde (Document): {e}")
         hypothetical = query
